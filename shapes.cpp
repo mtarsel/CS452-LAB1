@@ -79,14 +79,47 @@ void triangle2(){
   glFlush();//make sure the processes finish
 }
 
+
+void triangle3(){
+  glClear(GL_COLOR_BUFFER_BIT);//clear screen
+
+  glGenVertexArrays(1, &vaoID);//generates object name for Vertex Array Objects
+  glBindVertexArray(vaoID);//bind the object to the array
+
+  glGenBuffers(1, &vboID);//generates object name for the Vertex Buffer Object
+  glBindBuffer(GL_ARRAY_BUFFER, vboID);//bind the object to the array
+  glBufferData(GL_ARRAY_BUFFER, sizeof(vertexarray), vertexarray,
+GL_STATIC_DRAW);//allocates the memory of the vertices
+
+ ShaderInfo shaders[]={//create the shader specified by my initshaders input
+  { GL_VERTEX_SHADER , "vertexshader3.glsl"} ,
+  { GL_FRAGMENT_SHADER , "fragmentshader3.glsl"},
+  { GL_NONE , NULL}
+  };
+
+  initShaders(shaders);//creates shaders
+
+  glEnableVertexAttribArray(0);//enables the vertex attribute index 
+  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);//specified the startthe vertice array used to the draw
+
+  glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);//draws object based on indices of the polygon
+  glDisableVertexAttribArray(0);
+  glFlush();//make sure the processes finish
+}
+
+
 void drawscene(){
-  switch(counter%2){//easy way to switch throw functions
+  switch(counter%3){//easy way to switch throw functions
     case 0:
-      glutDisplayFunc(triangle1);//TODO
+      glutDisplayFunc(triangle1);
       glutPostRedisplay();//sets flags for opengl to redraw the display
       break;
     case 1:
       glutDisplayFunc(triangle2);
+      glutPostRedisplay();
+      break;
+    case 2:
+      glutDisplayFunc(triangle3);
       glutPostRedisplay();
       break;
   }
@@ -106,101 +139,6 @@ void idle(void){
 }
 
 int main(int argc, char **argv){
-	/*
-	//SDL window and context management
-	SDL_Window *window;
-	
-	if(SDL_Init(SDL_INIT_VIDEO)<0){//initilizes the SDL video subsystem
-		fprintf(stderr,"Unable to create window: %s\n", SDL_GetError());
-    SDL_Quit();
-    exit(1);//die on error
-	}
-	//get the version of opengl
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,3);
-	
-	//create window
-	window = SDL_CreateWindow(
-		"Simple", //Window title
-		SDL_WINDOWPOS_UNDEFINED, //initial x position
-		SDL_WINDOWPOS_UNDEFINED, //initial y position
-		500,							//width, in pixels
-		500,							//height, in pixels
-		SDL_WINDOW_OPENGL| SDL_WINDOW_SHOWN		//flags to be had
-	);
-	
-	//check window creation
-	if(window==NULL){
-		fprintf(stderr,"Unable to create window: %s\n",SDL_GetError());
-	}
-	
-	//creates opengl context associated with the window
-	SDL_GLContext glcontext=SDL_GL_CreateContext(window);
-	
-	
-	SDL_Event event;
-	while(SDL_PollEvent(&event)){
-		switch(event.type){
-			case SDL_BUTTON_RIGHT:exit(1);
-		}
-	}
-	while(1){
-		triangle1();
-		SDL_GL_SwapBuffers();
-	}
-	
-	SDL_GL_DeleteContext(glcontext);
-  SDL_DestroyWindow(window);
-  SDL_Quit();
- 
-  return 0;
-}
-*/
-/*
-	//GLFW window and context managment
-	GLFWwindow* window;
-
-    // Initialize the library 
-    if(!glfwInit()){
-    		fprintf(stderr,"unable to intilize GLFW");
-        exit(EXIT_FAILURE);
-    }
-
-    // Create a windowed mode window and its OpenGL context 
-    window = glfwCreateWindow(
-    500, //width
-    500, //height
-    "Simple",//name
-    NULL, //moniter
-    NULL);//share
-    //check to see if window created
-    if (!window){
-  			fprintf(stderr,"unable to open window");
-        glfwTerminate();
-       exit(EXIT_FAILURE);
-    }
-
-    // Make the window's context current 
-    glfwMakeContextCurrent(window);
-
-    // Loop until the user closes the window 
-    while (!glfwWindowShouldClose(window)){
-
-        drawscene();
-        if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS){glfwSetWindowShouldClose(window, GL_TRUE);}
-	
-        // Swap front and back buffers 
-        glfwSwapBuffers(window);
-
-        // Poll for and process events 
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
-    return 0;
-}
-*/
-
 	//Freeglut window and context management	
   glutInit(&argc, argv);
   glutCreateWindow("Shapes");//creates the window with the specified name
