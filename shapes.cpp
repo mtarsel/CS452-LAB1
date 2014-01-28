@@ -1,6 +1,5 @@
-//
-//
-//run command g++ error.cpp -lglut -lGL -lGLEW -g
+// Mick Tarsel
+// use Makefile to run
 
 
 #include "initShaders.h"
@@ -14,19 +13,6 @@ GLfloat vertexarray[]={0.5f,-0.5f,0.0f,0.0f,0.5f,0.0f,-0.5f,-0.5f,0.0f};// verti
 //indices of triangle
 GLubyte indices[3]={0,1,2};
 
-/*
-//opengl antique
-void triangle1(){
-	glClear(GL_COLOR_BUFFER_BIT);//clears the screen
-	glBegin(GL_TRIANGLES);//draws a triangle
-	glColor3f(1.0,1.0,0.0);//specifies the color r,g,b
-	glVertex3f(0.5,-0.5,0.0);
-	glVertex3f(0.0,0.5,0.0);
-	glVertex3f(-0.5,-0.5,0.0);
-	glEnd();
-	glFlush();
-}
-*/
 //opengl 4
 void triangle1(){
   glClear(GL_COLOR_BUFFER_BIT);//clears the screen
