@@ -40,7 +40,7 @@ void triangle1(){
 }
 
 void triangle2(){
-  glClear(GL_COLOR_BUFFER_BIT);//clear screen
+/*  glClear(GL_COLOR_BUFFER_BIT);//clear screen
 
   glGenVertexArrays(1, &vaoID);//generates object name for Vertex Array Objects
   glBindVertexArray(vaoID);//bind the object to the array
@@ -62,12 +62,34 @@ void triangle2(){
   
   glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);//draws object based on indices of the polygon
   glDisableVertexAttribArray(0);
-  glFlush();//make sure the processes finish
+  glFlush();//make sure the processes finish*/
+
+static GLfloat currentAngleOfRotation = 0.0;
+
+static bool spinning = true;
+
+glClear(GL_COLOR_BUFFER_BIT);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+  glRotatef(currentAngleOfRotation, 0.0, 0.0, 1.0);
+  glRectf(-.5, -.5, .5, .5);
+  glFlush();
+  glutSwapBuffers();
+
+
+}
+
+void myWireSphere(GLfloat radius, int slices, int stacks) {
+  glPushMatrix();
+  glRotatef(-90.0, 1.0, 0.0, 0.0);
+  glutWireSphere(radius, slices, stacks);
+  glPopMatrix();
 }
 
 
+
 void triangle3(){
-  glClear(GL_COLOR_BUFFER_BIT);//clear screen
+/*  glClear(GL_COLOR_BUFFER_BIT);//clear screen
 
   glGenVertexArrays(1, &vaoID);//generates object name for Vertex Array Objects
   glBindVertexArray(vaoID);//bind the object to the array
@@ -90,8 +112,61 @@ GL_STATIC_DRAW);//allocates the memory of the vertices
 
   glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);//draws object based on indices of the polygon
   glDisableVertexAttribArray(0);
-  glFlush();//make sure the processes finish
+  glFlush();//make sure the processes finish*/
+
+/*
+
+ // Set every pixel in the frame buffer to the current clear color.
+  glClear(GL_COLOR_BUFFER_BIT);
+
+  // Drawing is done by specifying a sequence of vertices.  The way these
+  // vertices are connected (or not connected) depends on the argument to
+  // glBegin.  GL_POLYGON constructs a filled polygon.
+  glBegin(GL_POLYGON);
+    glColor3f(1, 0, 0); glVertex3f(-0.6, -0.75, 0.5);
+    glColor3f(0, 1, 0); glVertex3f(0.6, -0.75, 0);
+    glColor3f(0, 0, 1); glVertex3f(0, 0.75, 0);
+  glEnd();
+  glBegin(GL_POLYGON);
+    glColor3f(1, 0, 0); glVertex3f(0.6, -0.75, 0.5);
+    glColor3f(0, 1, 0); glVertex3f(-0.6, 0.75, 0);
+    glColor3f(0, 0, 1); glVertex3f(0, -0.75, 0);
+  glEnd();
+
+  // Flush drawing command buffer to make drawing happen as soon as possible.
+  glFlush();*/
+
+
+static int year = 0, day = 0;
+
+glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glPushMatrix();
+
+  // Draw sun: a yellow sphere of radius 1 centered at the origin.
+  glColor3f(1.0, 1.0, 0.0);
+  myWireSphere(1.0, 15, 15);
+
+  // Draw planet: a blue sphere of radius 0.2, 2 units away from sun, with
+  // a white "pole" for its axis.
+  glRotatef((GLfloat)year, 0.0, 1.0, 0.0);
+  glTranslatef (2.0, 0.0, 0.0);
+  glRotatef((GLfloat)day, 0.0, 1.0, 0.0);
+  glColor3f(0.0, 0.0, 1.0);
+  myWireSphere(0.2, 15, 15);
+  glColor3f(1, 1, 1);
+  glBegin(GL_LINES);
+    glVertex3f(0, -0.3, 0);
+    glVertex3f(0, 0.3, 0);
+  glEnd();
+
+  glPopMatrix();
+  glFlush();
+  glutSwapBuffers();
+
+
 }
+
+
 
 
 void drawscene(){
