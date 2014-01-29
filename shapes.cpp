@@ -1,5 +1,7 @@
 // Mick Tarsel
 // use Makefile to run
+//displays white triangle, white square, white sphere
+
 
 
 #include "initShaders.h"
@@ -39,30 +41,7 @@ void triangle1(){
   glFlush();//makes sure the prcesses finish
 }
 
-void triangle2(){
-/*  glClear(GL_COLOR_BUFFER_BIT);//clear screen
-
-  glGenVertexArrays(1, &vaoID);//generates object name for Vertex Array Objects
-  glBindVertexArray(vaoID);//bind the object to the array
-
-  glGenBuffers(1, &vboID);//generates object name for the Vertex Buffer Object
-  glBindBuffer(GL_ARRAY_BUFFER, vboID);//bind the object to the array
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertexarray), vertexarray, GL_STATIC_DRAW);//allocates the memory of the vertices
-
- ShaderInfo shaders[]={//create the shader specified by my initshaders input
-  { GL_VERTEX_SHADER , "vertexshader2.glsl"} ,
-  { GL_FRAGMENT_SHADER , "fragmentshader2.glsl"},
-  { GL_NONE , NULL} 
-  };
-
-  initShaders(shaders);//creates shaders
-  	  	
-  glEnableVertexAttribArray(0);//enables the vertex attribute index 
-  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);//specified the start the vertice array used to the draw
-  
-  glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);//draws object based on indices of the polygon
-  glDisableVertexAttribArray(0);
-  glFlush();//make sure the processes finish*/
+void square(){
 
 static GLfloat currentAngleOfRotation = 0.0;
 
@@ -75,8 +54,6 @@ glClear(GL_COLOR_BUFFER_BIT);
   glRectf(-.5, -.5, .5, .5);
   glFlush();
   glutSwapBuffers();
-
-
 }
 
 void myWireSphere(GLfloat radius, int slices, int stacks) {
@@ -86,56 +63,7 @@ void myWireSphere(GLfloat radius, int slices, int stacks) {
   glPopMatrix();
 }
 
-
-
-void triangle3(){
-/*  glClear(GL_COLOR_BUFFER_BIT);//clear screen
-
-  glGenVertexArrays(1, &vaoID);//generates object name for Vertex Array Objects
-  glBindVertexArray(vaoID);//bind the object to the array
-
-  glGenBuffers(1, &vboID);//generates object name for the Vertex Buffer Object
-  glBindBuffer(GL_ARRAY_BUFFER, vboID);//bind the object to the array
-  glBufferData(GL_ARRAY_BUFFER, sizeof(vertexarray), vertexarray,
-GL_STATIC_DRAW);//allocates the memory of the vertices
-
- ShaderInfo shaders[]={//create the shader specified by my initshaders input
-  { GL_VERTEX_SHADER , "vertexshader3.glsl"} ,
-  { GL_FRAGMENT_SHADER , "fragmentshader3.glsl"},
-  { GL_NONE , NULL}
-  };
-
-  initShaders(shaders);//creates shaders
-
-  glEnableVertexAttribArray(0);//enables the vertex attribute index 
-  glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);//specified the startthe vertice array used to the draw
-
-  glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_BYTE, indices);//draws object based on indices of the polygon
-  glDisableVertexAttribArray(0);
-  glFlush();//make sure the processes finish*/
-
-/*
-
- // Set every pixel in the frame buffer to the current clear color.
-  glClear(GL_COLOR_BUFFER_BIT);
-
-  // Drawing is done by specifying a sequence of vertices.  The way these
-  // vertices are connected (or not connected) depends on the argument to
-  // glBegin.  GL_POLYGON constructs a filled polygon.
-  glBegin(GL_POLYGON);
-    glColor3f(1, 0, 0); glVertex3f(-0.6, -0.75, 0.5);
-    glColor3f(0, 1, 0); glVertex3f(0.6, -0.75, 0);
-    glColor3f(0, 0, 1); glVertex3f(0, 0.75, 0);
-  glEnd();
-  glBegin(GL_POLYGON);
-    glColor3f(1, 0, 0); glVertex3f(0.6, -0.75, 0.5);
-    glColor3f(0, 1, 0); glVertex3f(-0.6, 0.75, 0);
-    glColor3f(0, 0, 1); glVertex3f(0, -0.75, 0);
-  glEnd();
-
-  // Flush drawing command buffer to make drawing happen as soon as possible.
-  glFlush();*/
-
+void sphere(){
 
 static int year = 0, day = 0;
 
@@ -162,12 +90,7 @@ glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   glPopMatrix();
   glFlush();
   glutSwapBuffers();
-
-
 }
-
-
-
 
 void drawscene(){
   switch(counter%3){//easy way to switch throw functions
@@ -176,11 +99,11 @@ void drawscene(){
       glutPostRedisplay();//sets flags for opengl to redraw the display
       break;
     case 1:
-      glutDisplayFunc(triangle2);
+      glutDisplayFunc(square);
       glutPostRedisplay();
       break;
     case 2:
-      glutDisplayFunc(triangle3);
+      glutDisplayFunc(sphere);
       glutPostRedisplay();
       break;
   }
